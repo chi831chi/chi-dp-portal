@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chi Device Protection</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ink: #15312d;
+      --muted: #56706b;
+      --teal: #0f766e;
+      --teal2: #14b8a6;
+      --card: rgba(255,255,255,.92);
+      --stroke: rgba(18,58,52,.12);
+      --shadow: 0 22px 60px rgba(0,0,0,.10);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, sans-serif;
+      color: var(--ink);
+      background: linear-gradient(135deg, #eef9f6, #fbfdfc);
+      line-height: 1.6;
+    }
+
+    header {
+      padding: 26px 42px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: white;
+      border-bottom: 1px solid var(--stroke);
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-shrink: 0;
+    }
+
+    .brand img {
+      height: 150px;
+      mix-blend-mode: multiply;
+    }
+
+    .brand-text .name {
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: .2px;
+    }
+
+    .brand-text .slogan {
+      font-size: 13px;
+      font-style: italic;
+      color: var(--muted);
+    }
+
+    nav {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #2b4d47;
+      font-weight: 500;
+      font-size: 14px;
+      padding: 8px 12px;
+      border-radius: 10px;
+      transition: .2s ease;
+      cursor: pointer;
+    }
+
+    nav a:hover {
+      background: rgba(20,184,166,.10);
+      color: var(--teal);
+    }
+
+    /* RIGHT SIDE: Agent Portal button + pill */
+    .right-nav {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-shrink: 0;
+    }
+
+    .agent-portal-btn {
+      background: linear-gradient(135deg, var(--teal), var(--teal2));
+      color: white;
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(15,118,110,0.25);
+    }
+
+    .agent-portal-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(15,118,110,0.35);
+    }
+
+    .pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(20,184,166,.22);
+      background: rgba(255,255,255,.75);
+      color: var(--muted);
+      font-size: 13px;
+      box-shadow: 0 14px 30px rgba(0,0,0,.06);
+      white-space: nowrap;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal), var(--teal2));
+      box-shadow: 0 0 0 4px rgba(20,184,166,.18);
+    }
+
+    /* The rest of your styles (hero, plans, features, steps, faq, modal, footer) remain unchanged */
+    .hero { padding: 100px 42px 80px; text-align: center; }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: 3.2rem; margin: 0 0 16px; }
+    .hero .offer { font-size: 1.5rem; font-weight: 600; color: var(--teal); margin: 12px 0; }
+    .badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin: 30px 0; }
+    .badge { background: white; padding: 10px 20px; border-radius: 999px; box-shadow: 0 4px 15px rgba(0,0,0,.06); font-size: 14px; font-weight: 500; }
+    .cta { background: linear-gradient(135deg, var(--teal), var(--teal2)); color: white; padding: 16px 40px; border-radius: 14px; font-size: 1.1rem; font-weight: 700; text-decoration: none; display: inline-block; margin-top: 20px; }
+
+    .plans { padding: 80px 42px; text-align: center; }
+    .plans h2 { font-family: 'Playfair Display', serif; font-size: 2.6rem; margin-bottom: 12px; }
+    .plans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-top: 50px; }
+    .plan-card { background: white; border-radius: var(--radius); padding: 40px 30px; box-shadow: var(--shadow); border: 1px solid var(--stroke); transition: all 0.3s ease; }
+    .plan-card:hover { transform: translateY(-12px); box-shadow: 0 30px 70px rgba(0,0,0,.12); }
+    .plan-price { font-size: 3rem; font-weight: 700; color: var(--teal); margin: 16px 0; }
+
+    .features { padding: 80px 42px; background: white; }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px; max-width: 1100px; margin: 0 auto; }
+    .feature-card { background: white; border-radius: var(--radius); padding: 40px 24px; box-shadow: var(--shadow); text-align: center; transition: transform 0.3s; }
+    .feature-card:hover { transform: translateY(-8px); }
+    .feature-icon { font-size: 52px; margin-bottom: 20px; }
+    .feature-title { font-size: 1.35rem; font-weight: 600; margin-bottom: 12px; }
+    .feature-desc { color: var(--muted); font-size: 14.5px; line-height: 1.5; }
+
+    .steps { padding: 80px 42px; text-align: center; }
+    .steps h2 { font-family: 'Playfair Display', serif; font-size: 2.6rem; }
+    .step-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 40px; margin-top: 60px; }
+    .step { text-align: center; }
+    .step-number { font-size: 4rem; font-weight: 700; color: var(--teal); opacity: 0.15; margin-bottom: -20px; }
+
+    .faq { padding: 80px 42px; background: #f8fdfc; }
+    details { margin-bottom: 20px; background: white; border-radius: 14px; padding: 20px; box-shadow: 0 8px 25px rgba(0,0,0,.05); }
+    summary { font-weight: 600; cursor: pointer; font-size: 1.1rem; }
+
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(21,49,45,0.65); backdrop-filter: blur(6px);
+      display: none; align-items: center; justify-content: center; z-index: 1000;
+    }
+    .modal {
+      background: white; border-radius: 18px; width: 90%; max-width: 480px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.25); overflow: hidden;
+    }
+    .modal-header {
+      background: linear-gradient(135deg, var(--teal), var(--teal2));
+      color: white; padding: 20px 28px; font-size: 1.4rem; font-weight: 600;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .modal-close { font-size: 1.6rem; cursor: pointer; opacity: 0.9; }
+    .modal-close:hover { opacity: 1; }
+    .modal-body { padding: 28px; }
+    .modal-body label { display: block; margin-bottom: 6px; font-weight: 600; color: var(--ink); font-size: 0.95rem; }
+    .modal-body input, .modal-body textarea, .modal-body select {
+      width: 100%; padding: 14px 16px; border: 1px solid var(--stroke);
+      border-radius: 12px; margin-bottom: 20px; font-size: 1rem; background: #fcfefe;
+    }
+    .modal-body textarea { min-height: 120px; resize: vertical; }
+    .modal-body button {
+      background: linear-gradient(135deg, var(--teal), var(--teal2));
+      color: white; border: none; padding: 16px; font-size: 1.05rem;
+      font-weight: 600; border-radius: 12px; width: 100%; cursor: pointer;
+    }
+
+    footer {
+      padding: 60px 42px 40px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <img src="logo.png" alt="Chi Device Protection">
+      <div class="brand-text">
+        <div class="name">Chi Device Protection</div>
+        <div class="slogan">Keeping Life's Energy Connected and Secure.</div>
+      </div>
+    </div>
+
+    <nav>
+      <a href="#plans">Plans</a>
+      <a href="#how">How it Works</a>
+      <a href="#" onclick="openClaimsModal(); return false;">Claims</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+
+    <div class="right-nav">
+      <a href="https://chi-dp-agent-portal.vercel.app/" target="_blank" class="agent-portal-btn">Agent Portal</a>
+      <div class="pill">
+        <span class="dot"></span>
+        <span>Coverage starts instantly • 24/7 calm support</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>Protect what matters.</h1>
+    <p class="offer">Up to 4 phones + unlimited home electronics for just <strong>$34.99/mo</strong></p>
+    <div class="badges">
+      <div class="badge">Loss • Theft • Damage</div>
+      <div class="badge">Save up to 50% vs carriers</div>
+      <div class="badge">Fast repairs or replacements</div>
+      <div class="badge">Coverage starts instantly</div>
+    </div>
+    <a href="#plans" class="cta">Choose Your Coverage</a>
+  </section>
+
+  <!-- PLANS -->
+  <section id="plans" class="plans">
+    <h2>Choose Your Coverage</h2>
+    <p style="color:var(--muted); font-size:1.1rem;">Three powerful plans. One easy choice.</p>
+
+    <div class="plans-grid">
+      <div class="plan-card">
+        <h3>Total Device Protection</h3>
+        <div class="plan-price">$34.99<span style="font-size:0.5em;">/mo</span></div>
+        <ul style="text-align:left; margin:24px 0; padding-left:20px;">
+          <li>Up to 4 mobile phones</li>
+          <li>Unlimited laptops, tablets, TVs, wearables & more</li>
+          <li>Loss, theft, damage, breakdown</li>
+          <li>Unlimited claims • $2,500 per claim</li>
+        </ul>
+        <a href="#" class="btn" style="background:var(--teal); color:white;">Select Total Plan</a>
+      </div>
+
+      <div class="plan-card">
+        <h3>Home Device Protection</h3>
+        <div class="plan-price">$19.99<span style="font-size:0.5em;">/mo</span></div>
+        <ul style="text-align:left; margin:24px 0; padding-left:20px;">
+          <li>TVs, laptops, gaming consoles, smart home devices</li>
+          <li>Accidental damage & breakdown</li>
+          <li>Unlimited claims • $6,000 annual cap</li>
+        </ul>
+        <a href="#" class="btn" style="background:var(--teal); color:white;">Select Home Plan</a>
+      </div>
+
+      <div class="plan-card">
+        <h3>Mobile Device Protection</h3>
+        <div class="plan-price">$16.99<span style="font-size:0.5em;">/mo</span></div>
+        <ul style="text-align:left; margin:24px 0; padding-left:20px;">
+          <li>Up to 4 mobile phones per household</li>
+          <li>Loss, theft, screen damage & breakdown</li>
+          <li>Fast replacement or repair</li>
+        </ul>
+        <a href="#" class="btn" style="background:var(--teal); color:white;">Select Mobile Plan</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURE CARDS -->
+  <section class="features">
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-icon">⏱️</span>
+        <div class="feature-title">Instant Activation</div>
+        <div class="feature-desc">Coverage begins the moment enrollment completes.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🛡️</span>
+        <div class="feature-title">Secure + Simple</div>
+        <div class="feature-desc">Agent-first flows with fewer clicks and fewer mistakes.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">💬</span>
+        <div class="feature-title">Support That Calms</div>
+        <div class="feature-desc">24/7 help so you and customers stay steady.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how" class="steps">
+    <h2>Protect your devices today</h2>
+    <p style="color:var(--muted);">Takes less than 2 minutes • Cancel anytime</p>
+
+    <div class="step-grid">
+      <div class="step">
+        <div class="step-number">01</div>
+        <h3>Choose Plan</h3>
+        <p>Select coverage that fits your needs.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">02</div>
+        <h3>Provide Info</h3>
+        <p>Enter your details and complete enrollment.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">03</div>
+        <h3>Get Covered</h3>
+        <p>Protection starts instantly. File claims anytime.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="faq">
+    <h2 style="text-align:center; margin-bottom:40px;">Frequently Asked Questions</h2>
+    <details>
+      <summary>What does Chi Total Device Protection cover?</summary>
+      <p>Up to 4 mobile phones and unlimited home electronics including laptops, tablets, TVs, gaming systems, wearables, and more. Covers accidental damage, loss, theft, and mechanical breakdown.</p>
+    </details>
+    <details>
+      <summary>Can I cancel my plan?</summary>
+      <p>Yes. You can cancel anytime from your account with no fees.</p>
+    </details>
+    <details>
+      <summary>How do I file a claim?</summary>
+      <p>Log into your Chi account or use our mobile app. Most claims are resolved within 48 hours.</p>
+    </details>
+  </section>
+
+  <!-- CLAIMS MODAL -->
+  <div id="claims-modal" class="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <span>File a Claim</span>
+        <span class="modal-close" onclick="closeClaimsModal()">×</span>
+      </div>
+      <div class="modal-body">
+        <label for="claim-name">Name</label>
+        <input id="claim-name" type="text" placeholder="Your full name">
+
+        <label for="claim-email">Email</label>
+        <input id="claim-email" type="email" placeholder="your@email.com">
+
+        <label for="claim-phone">Phone</label>
+        <input id="claim-phone" type="tel" placeholder="(555) 123-4567">
+
+        <label for="claim-type">Claim Type</label>
+        <select id="claim-type">
+          <option value="">Select type...</option>
+          <option value="lost">Lost / Stolen Device</option>
+          <option value="damage">Accidental Damage</option>
+          <option value="breakdown">Mechanical Breakdown</option>
+          <option value="other">Other</option>
+        </select>
+
+        <label for="claim-desc">Description</label>
+        <textarea id="claim-desc" placeholder="Describe what happened..."></textarea>
+
+        <button onclick="submitClaim()">Submit Claim</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    © 2026 Chi Device Protection. All rights reserved.<br>
+    Keeping Life's Energy Connected and Secure.
+  </footer>
+
+  <script>
+    function openClaimsModal() {
+      document.getElementById('claims-modal').style.display = 'flex';
+    }
+
+    function closeClaimsModal() {
+      document.getElementById('claims-modal').style.display = 'none';
+    }
+
+    function submitClaim() {
+      alert("Claim submitted (demo mode). Our team will reach out shortly.");
+      closeClaimsModal();
+    }
+
+    document.getElementById('claims-modal').addEventListener('click', function(e) {
+      if (e.target === this) closeClaimsModal();
+    });
+  </script>
+</body>
+</html>
